@@ -1,0 +1,28 @@
+class UserForRegister {
+  late String email;
+  late String password;
+  late String firstName;
+  late String lastName;
+  late String phoneNumber;
+
+  UserForRegister(this.email, this.password, this.firstName, this.lastName,
+      this.phoneNumber);
+
+  UserForRegister.fromJson(Map json) {
+    email = json["id"];
+    password = json["password"];
+    firstName = json["firstName"];
+    lastName = json["lastName"];
+    phoneNumber = json["phoneNumber"];
+  }
+
+  Map toJson() {
+    return {
+      "email": email,
+      "password": password,
+      "firstName": firstName,
+      "lastName": lastName,
+      "phoneNumber": phoneNumber
+    };
+  }
+}
