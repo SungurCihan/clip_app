@@ -1,7 +1,11 @@
+import 'package:clip_app/bloc/auth/login/login_bloc.dart';
+import 'package:clip_app/bloc/auth/login/login_event.dart';
+import 'package:clip_app/bloc/auth/login/login_state.dart';
 import 'package:clip_app/screens/helpers/clip_title.dart';
 import 'package:clip_app/screens/helpers/pink_button.dart';
 import 'package:clip_app/screens/registration_screens/verification.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class PhoneNumberValidation extends StatefulWidget {
@@ -60,32 +64,45 @@ class PhoneNumberValidationState extends State {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: <Widget>[
-              SizedBox(height: (MediaQuery.of(context).size.width * 35) / 100),
-              ClipTitle(78),
-              SizedBox(
-                height: 80,
+    return BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      child: WillPopScope(
+        onWillPop: () async {
+          context.read<LoginBloc>().add(LoginNotSubmitted());
+          Navigator.pop(context, true);
+          return true;
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
               ),
-              _email(),
-              SizedBox(
-                height: 30,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                // ignore: prefer_const_literals_to_create_immutables
+                children: <Widget>[
+                  SizedBox(
+                      height: (MediaQuery.of(context).size.width * 35) / 100),
+                  ClipTitle(78),
+                  SizedBox(
+                    height: 80,
+                  ),
+                  _email(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  PinkButton("Kod Gönder", "/verificcation", () {}),
+                ],
               ),
-              PinkButton("Kod Gönder", () => Verificatoin()),
-            ],
+            ),
           ),
         ),
       ),

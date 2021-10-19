@@ -1,4 +1,7 @@
-class UserForRegister {
+import 'package:equatable/equatable.dart';
+
+class UserForRegister extends Equatable {
+  late int id;
   late String email;
   late String password;
   late String firstName;
@@ -8,8 +11,11 @@ class UserForRegister {
   UserForRegister(this.email, this.password, this.firstName, this.lastName,
       this.phoneNumber);
 
+  UserForRegister.withoutPhoneNuber(
+      this.email, this.password, this.firstName, this.lastName);
+
   UserForRegister.fromJson(Map json) {
-    email = json["id"];
+    email = json["email"];
     password = json["password"];
     firstName = json["firstName"];
     lastName = json["lastName"];
@@ -25,4 +31,8 @@ class UserForRegister {
       "phoneNumber": phoneNumber
     };
   }
+
+  @override
+  List<Object?> get props =>
+      [id, email, firstName, lastName, password, phoneNumber];
 }

@@ -1,7 +1,5 @@
 import 'package:clip_app/screens/helpers/pink_button.dart';
 import 'package:clip_app/screens/helpers/clip_title.dart';
-import 'package:clip_app/screens/registration_screens/login_screen.dart';
-import 'package:clip_app/screens/registration_screens/sign_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,8 +16,7 @@ class LoginOrSignInScreenState extends State {
   Widget _signUpButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        Navigator.of(context).pushNamed("/login");
       },
       hoverColor: Colors.transparent,
       splashColor: Colors.transparent,
@@ -56,7 +53,9 @@ class LoginOrSignInScreenState extends State {
               SizedBox(
                 height: 80,
               ),
-              PinkButton("Kayıt Ol", () => SignScreen()),
+              PinkButton("Kayıt Ol", "/sign", () {
+                print("cesitli seyler");
+              }),
               SizedBox(
                 height: 20,
               ),

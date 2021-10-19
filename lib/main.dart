@@ -1,13 +1,24 @@
+import 'dart:io';
+
 import 'package:clip_app/screens/registration_screens/login_or_sign_screen.dart';
+import 'package:clip_app/screens/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  runApp(const MyApp());
+  HttpOverrides.global = MyHttpOverrides();
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AppRouter _appRouter = AppRouter();
 
   // This widget is the root of your application.
   @override
@@ -23,6 +34,22 @@ class MyApp extends StatelessWidget {
             bodyText2: GoogleFonts.roboto(textStyle: textTheme.bodyText2),
           ),
         ),
+        onGenerateRoute: _appRouter.onGenerateRoute,
         home: LoginOrSignScreen());
+  }
+
+  @override
+  void dispose() {
+    _appRouter.dispose();
+    super.dispose();
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

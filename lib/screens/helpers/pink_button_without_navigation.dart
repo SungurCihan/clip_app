@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-class PinkButton extends StatelessWidget {
+class PinkButtonWithoutNavigation extends StatelessWidget {
   final String content;
-  final String routeName;
   final void Function() method;
 
-  const PinkButton(this.content, this.routeName, this.method, {Key? key})
+  const PinkButtonWithoutNavigation(this.content, this.method, {Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(routeName);
         method();
       },
       hoverColor: Colors.transparent,

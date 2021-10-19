@@ -256,11 +256,15 @@ class SignScreenState extends State {
               SizedBox(
                 height: 30,
               ),
-              PinkButton(
-                "Kayıt Ol",
-                () => PhoneNumberValidation(),
-                registerPreFlight(emailConroller.text, passwordConroller.text, firstNameConroller.text, lastNameConroller.text)
-              ),
+              PinkButton("Kayıt Ol", "/phoneNumber", () {
+                UserForRegister userToRegister = UserForRegister(
+                    emailConroller.text,
+                    passwordConroller.text,
+                    firstNameConroller.text,
+                    lastNameConroller.text,
+                    "");
+                AuthApi.registerforPreFlight(userToRegister);
+              }),
               SizedBox(
                 height: 40,
               ),
@@ -273,8 +277,12 @@ class SignScreenState extends State {
   }
 }
 
-void Function() registerPreFlight(String email, String password, String, firstName, String lastName) {
-  UserForRegister userToRegister = new UserForRegister(email, password, firstName, lastName, phoneNumber);
+// void Function() registerPreFlight(
+//     String email, String password, String firstName, String lastName) {
+//   UserForRegister userToRegister =
+//       UserForRegister.withoutPhoneNuber(email, password, firstName, lastName);
 
-  AuthApi.registerforPreFlight(userForRegister)
-}
+//   AuthApi.registerforPreFlight(userToRegister);
+
+//   return registerPreFlight(email, password, firstName, lastName);
+// }
