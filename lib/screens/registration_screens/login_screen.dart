@@ -8,6 +8,7 @@ import 'package:clip_app/screens/helpers/clip_title.dart';
 import 'package:clip_app/screens/helpers/pink_button_without_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:social_auth_buttons/res/buttons/google_auth_button.dart';
@@ -193,7 +194,7 @@ class LoginScreenState extends State {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white, body: _loginForm());
+    return Scaffold(body: _loginForm());
   }
 
   Widget _loginForm() {
@@ -241,7 +242,9 @@ class LoginScreenState extends State {
                     // final isLogin = context.select(
                     //     (LoginBloc loginBloc) => loginBloc.state.formStatus);
                     return state.formStatus is FormSubmitting
-                        ? CircularProgressIndicator()
+                        ? CircularProgressIndicator(
+                            color: Color(0xffFF007F),
+                          )
                         : PinkButtonWithoutNavigation("Giriş Yap", () {
                             if (_formKey.currentState!.validate()) {
                               context.read<LoginBloc>().add(LoginSubmitted());
@@ -267,8 +270,19 @@ class LoginScreenState extends State {
   }
 
   void _showSnackBar(BuildContext context, String message) {
-    final snackBar = SnackBar(content: Text(message));
+    final snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.red,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     print(message);
+  }
+
+  void toast(String message) {
+    Fluttertoast.showToast(
+      msg: message, backgroundColor: Colors.red, gravity: ToastGravity.BOTTOM,
+      //textColor: Colors.black,
+      //toastLength: Toast.LENGTH_LONG
+    );
   }
 }

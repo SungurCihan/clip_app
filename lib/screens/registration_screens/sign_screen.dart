@@ -1,10 +1,11 @@
-import 'package:clip_app/data_api/auth_api.dart';
-import 'package:clip_app/models/user_for_register.dart';
+import 'package:clip_app/bloc/auth/form_submission_status.dart';
+import 'package:clip_app/bloc/auth/sign_up/sign_bloc.dart';
+import 'package:clip_app/bloc/auth/sign_up/sign_event.dart';
+import 'package:clip_app/bloc/auth/sign_up/sign_state.dart';
 import 'package:clip_app/screens/helpers/clip_title.dart';
-import 'package:clip_app/screens/helpers/pink_button.dart';
-import 'package:clip_app/screens/helpers/text_field.dart';
-import 'package:clip_app/screens/registration_screens/phone_number_validation_screen.dart';
+import 'package:clip_app/screens/helpers/pink_button_without_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_auth_buttons/res/buttons/google_auth_button.dart';
 import 'package:social_auth_buttons/res/shared/auth_button_style.dart';
 import 'package:social_auth_buttons/social_auth_buttons.dart';
@@ -21,6 +22,8 @@ class SignScreen extends StatefulWidget {
 class SignScreenState extends State {
   late Color emailIconColor;
   late Color passswordIconColor;
+
+  final _formKey = GlobalKey<FormState>();
 
   bool _isVisible = false;
   bool _isVisibleRepeat = false;
@@ -39,129 +42,155 @@ class SignScreenState extends State {
   }
 
   Widget _email() {
-    return Container(
-      width: (MediaQuery.of(context).size.width * 73) / 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: TextFormField(
-        onTap: () {
-          setState(() {
-            emailIconColor = Color(0xffFF007F);
-            passswordIconColor = Colors.grey;
-          });
-        },
-        controller: emailConroller,
-        keyboardType: TextInputType.emailAddress,
-        autofocus: false,
-        decoration: InputDecoration(
-          hintText: 'E-posta',
-          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-          border: OutlineInputBorder(
+    return BlocBuilder<SignBloc, SignState>(
+      builder: (context, state) {
+        return Container(
+          width: (MediaQuery.of(context).size.width * 73) / 100,
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffFF007F)),
-            borderRadius: BorderRadius.circular(10),
+          child: TextFormField(
+            onTap: () {
+              setState(() {
+                emailIconColor = Color(0xffFF007F);
+                passswordIconColor = Colors.grey;
+              });
+            },
+            controller: emailConroller,
+            keyboardType: TextInputType.emailAddress,
+            autofocus: false,
+            decoration: InputDecoration(
+              hintText: 'E-posta',
+              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            validator: (value) =>
+                state.isValidEmail ? null : "E-posta adresiniz çok kısa.",
+            onChanged: (value) =>
+                context.read<SignBloc>().add(RegisterMailChanged(mail: value)),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
   Widget _password() {
-    return Container(
-      width: (MediaQuery.of(context).size.width * 73) / 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: TextFormField(
-        onTap: () {
-          setState(() {
-            passswordIconColor = Color(0xffFF007F);
-            emailIconColor = Colors.grey;
-          });
-        },
-        controller: passwordConroller,
-        obscureText: !_isVisible,
-        keyboardType: TextInputType.emailAddress,
-        autofocus: false,
-        decoration: InputDecoration(
-          suffixIcon: IconButton(
-            onPressed: () {
+    return BlocBuilder<SignBloc, SignState>(
+      builder: (context, state) {
+        return Container(
+          width: (MediaQuery.of(context).size.width * 73) / 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: TextFormField(
+            onTap: () {
               setState(() {
-                _isVisible = !_isVisible;
+                passswordIconColor = Color(0xffFF007F);
+                emailIconColor = Colors.grey;
               });
             },
-            icon: _isVisible
-                ? Icon(
-                    Icons.visibility,
-                    color: Colors.black,
-                  )
-                : Icon(
-                    Icons.visibility_off,
-                    color: Colors.grey,
-                  ),
+            controller: passwordConroller,
+            obscureText: !_isVisible,
+            keyboardType: TextInputType.emailAddress,
+            autofocus: false,
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _isVisible = !_isVisible;
+                  });
+                },
+                icon: _isVisible
+                    ? Icon(
+                        Icons.visibility,
+                        color: Colors.black,
+                      )
+                    : Icon(
+                        Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+              ),
+              hintText: "Şifre",
+              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            validator: (value) =>
+                state.isValidPassword ? null : "Şifreniz çok kısa",
+            onChanged: (value) => context
+                .read<SignBloc>()
+                .add(RegisterPasswordChanged(password: value)),
           ),
-          hintText: "Şifre",
-          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffFF007F)),
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 
   Widget _passwordRepeat() {
-    return Container(
-      width: (MediaQuery.of(context).size.width * 73) / 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: TextFormField(
-        onTap: () {
-          setState(() {
-            passswordIconColor = Color(0xffFF007F);
-            emailIconColor = Colors.grey;
-          });
-        },
-        controller: passwordRepeatController,
-        obscureText: !_isVisibleRepeat,
-        keyboardType: TextInputType.emailAddress,
-        autofocus: false,
-        decoration: InputDecoration(
-          suffixIcon: IconButton(
-            onPressed: () {
+    return BlocBuilder<SignBloc, SignState>(
+      builder: (context, state) {
+        return Container(
+          width: (MediaQuery.of(context).size.width * 73) / 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: TextFormField(
+            onTap: () {
               setState(() {
-                _isVisibleRepeat = !_isVisibleRepeat;
+                passswordIconColor = Color(0xffFF007F);
+                emailIconColor = Colors.grey;
               });
             },
-            icon: _isVisibleRepeat
-                ? Icon(
-                    Icons.visibility,
-                    color: Colors.black,
-                  )
-                : Icon(
-                    Icons.visibility_off,
-                    color: Colors.grey,
-                  ),
+            controller: passwordRepeatController,
+            obscureText: !_isVisibleRepeat,
+            keyboardType: TextInputType.emailAddress,
+            autofocus: false,
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _isVisibleRepeat = !_isVisibleRepeat;
+                  });
+                },
+                icon: _isVisibleRepeat
+                    ? Icon(
+                        Icons.visibility,
+                        color: Colors.black,
+                      )
+                    : Icon(
+                        Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+              ),
+              hintText: "Şifre Tekrar",
+              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            validator: (value) =>
+                state.isValidPassswordRepeat ? null : "Şifreler eşleşmiyor",
+            onChanged: (value) => context
+                .read<SignBloc>()
+                .add(RegisterPasswordRepeatChanged(passwordRepeat: value)),
           ),
-          hintText: "Şifre Tekrar",
-          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffFF007F)),
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -214,75 +243,169 @@ class SignScreenState extends State {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+  Widget _firstNameTextField() {
+    return BlocBuilder<SignBloc, SignState>(
+      builder: (context, state) {
+        return Container(
+          width: (MediaQuery.of(context).size.width * 73) / 100,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            borderRadius: BorderRadius.circular(10),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: <Widget>[
-              //SizedBox(height: (MediaQuery.of(context).size.width * 25) / 100),
-              ClipTitle(68),
-              SizedBox(
-                height: 50,
+          child: TextFormField(
+            onTap: () {},
+            controller: firstNameConroller,
+            keyboardType: TextInputType.emailAddress,
+            autofocus: false,
+            decoration: InputDecoration(
+              hintText: "İsim",
+              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-              TextArea("Ad", firstNameConroller),
-              SizedBox(
-                height: 20,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderRadius: BorderRadius.circular(10),
               ),
-              TextArea("Soyad", lastNameConroller),
-              SizedBox(
-                height: 20,
-              ),
-              _email(),
-              SizedBox(
-                height: 20,
-              ),
-              _password(),
-              SizedBox(
-                height: 20,
-              ),
-              _passwordRepeat(),
-              SizedBox(
-                height: 30,
-              ),
-              PinkButton("Kayıt Ol", "/phoneNumber", () {
-                UserForRegister userToRegister = UserForRegister(
-                    emailConroller.text,
-                    passwordConroller.text,
-                    firstNameConroller.text,
-                    lastNameConroller.text,
-                    "");
-                AuthApi.registerforPreFlight(userToRegister);
-              }),
-              SizedBox(
-                height: 40,
-              ),
-              _signButtons(),
-            ],
+            ),
+            validator: (value) =>
+                state.isValidFirstName ? null : "Girrdiğiniz değer çok kısa",
+            onChanged: (value) => context
+                .read<SignBloc>()
+                .add(RegisterFirstNameChanged(firstName: value)),
           ),
-        ),
+        );
+      },
+    );
+  }
+
+  Widget _lastNameTextField() {
+    return BlocBuilder<SignBloc, SignState>(
+      builder: (context, state) {
+        return Container(
+          width: (MediaQuery.of(context).size.width * 73) / 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: TextFormField(
+            onTap: () {},
+            controller: lastNameConroller,
+            keyboardType: TextInputType.emailAddress,
+            autofocus: false,
+            decoration: InputDecoration(
+              hintText: "Soyisim",
+              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            validator: (value) =>
+                state.isValidLastName ? null : "Girrdiğiniz değer çok kısa",
+            onChanged: (value) => context
+                .read<SignBloc>()
+                .add(RegisterLastNameChanged(lastName: value)),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _signFormm() {
+    return BlocListener<SignBloc, SignState>(
+      listener: (context, state) {
+        final formStatus = state.formStatus;
+        if (formStatus is RegistrationFailed) {
+          _showSnackBar(context, formStatus.excepiton.toString());
+        } else if (formStatus is RegistrationSuccess) {
+          Navigator.of(context).pushNamed("/phoneNumber");
+        }
+      },
+      child: SingleChildScrollView(
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                // ignore: prefer_const_literals_to_create_immutables
+                children: <Widget>[
+                  //SizedBox(height: (MediaQuery.of(context).size.width * 25) / 100),
+                  ClipTitle(68),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  _firstNameTextField(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _lastNameTextField(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _email(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _password(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _passwordRepeat(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  BlocBuilder<SignBloc, SignState>(
+                    builder: (context, state) {
+                      // final isLogin = context.select(
+                      //     (LoginBloc loginBloc) => loginBloc.state.formStatus);
+                      return state.formStatus is FormSubmitting
+                          ? CircularProgressIndicator(
+                              color: Color(0xffFF007F),
+                            )
+                          : PinkButtonWithoutNavigation("Kayıt Ol", () {
+                              if (_formKey.currentState!.validate()) {
+                                context
+                                    .read<SignBloc>()
+                                    .add(RegistrationSubmitted());
+                                print(state.formStatus.toString());
+                              }
+                              // if (isLogin is SubmissionSuccess) {
+                              //   Navigator.of(context).pushNamed("/phoneNumber");
+                              // }
+                            });
+                    },
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  _signButtons(),
+                ],
+              ),
+            )),
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(backgroundColor: Colors.white, body: _signFormm());
+  }
 }
 
-// void Function() registerPreFlight(
-//     String email, String password, String firstName, String lastName) {
-//   UserForRegister userToRegister =
-//       UserForRegister.withoutPhoneNuber(email, password, firstName, lastName);
-
-//   AuthApi.registerforPreFlight(userToRegister);
-
-//   return registerPreFlight(email, password, firstName, lastName);
-// }
+void _showSnackBar(BuildContext context, String message) {
+  final snackBar = SnackBar(
+    content: Text(message),
+    backgroundColor: Colors.red,
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  print(message);
+}

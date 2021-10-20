@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class UserForRegister extends Equatable {
-  late int id;
   late String email;
   late String password;
   late String firstName;
@@ -34,5 +33,5 @@ class UserForRegister extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, email, firstName, lastName, password, phoneNumber];
+      [email, firstName, lastName, password, phoneNumber];
 }

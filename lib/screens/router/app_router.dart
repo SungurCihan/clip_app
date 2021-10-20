@@ -1,5 +1,6 @@
 import 'package:clip_app/bloc/auth/auth_repository.dart';
 import 'package:clip_app/bloc/auth/login/login_bloc.dart';
+import 'package:clip_app/bloc/auth/sign_up/sign_bloc.dart';
 import 'package:clip_app/screens/registration_screens/login_or_sign_screen.dart';
 import 'package:clip_app/screens/registration_screens/login_screen.dart';
 import 'package:clip_app/screens/registration_screens/phone_number_validation_screen.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRouter {
   final LoginBloc _loginBloc = LoginBloc(authRepo: AuthRepository());
+  final SignBloc _signBloc = SignBloc(authRepo: AuthRepository());
 
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -28,7 +30,7 @@ class AppRouter {
       case "/sign":
         return MaterialPageRoute(
             builder: (_) => BlocProvider.value(
-                  value: _loginBloc,
+                  value: _signBloc,
                   child: SignScreen(),
                 ));
       case "/phoneNumber":
