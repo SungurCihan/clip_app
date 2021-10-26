@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clip_app/screens/main_screens/bottom_page_route.dart';
 import 'package:clip_app/screens/registration_screens/login_or_sign_screen.dart';
 import 'package:clip_app/screens/router/app_router.dart';
 import 'package:clip_app/screens/tutorial/tutorial_page.dart';
@@ -27,16 +28,18 @@ class _MyAppState extends State<MyApp> {
     final textTheme = Theme.of(context).textTheme;
 
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          textTheme: GoogleFonts.robotoCondensedTextTheme(textTheme).copyWith(
-            bodyText1: GoogleFonts.satisfy(textStyle: textTheme.bodyText1),
-            bodyText2: GoogleFonts.roboto(textStyle: textTheme.bodyText2),
-          ),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.robotoCondensedTextTheme(textTheme).copyWith(
+          bodyText1: GoogleFonts.satisfy(textStyle: textTheme.bodyText1),
+          bodyText2: GoogleFonts.roboto(textStyle: textTheme.bodyText2),
         ),
-        onGenerateRoute: _appRouter.onGenerateRoute,
-        home: TutorialPage());
+      ),
+      onGenerateRoute: _appRouter.onGenerateRoute,
+      home: BottomPageRoute(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 
   @override
