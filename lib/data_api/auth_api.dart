@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class AuthApi {
   static Future register(UserForRegister userForRegister) {
     return http
-        .post(Uri.parse("https://10.0.0.2:44332/api/Auth/register"), body: {
+        .post(Uri.parse("https://10.0.2.2:44332/api/Auth/register"), body: {
       "email": userForRegister.email,
       "password": userForRegister.password,
       "firstName": userForRegister.firstName,
@@ -21,7 +21,7 @@ class AuthApi {
   static Future<UserResponseModelForPre> registerforPreFlight(
       UserForRegister userForRegister) async {
     try {
-      var url = Uri.parse("https://10.0.0.2:44332/api/Auth/registerpreflight");
+      var url = Uri.parse("https://10.0.2.2:44332/api/Auth/registerpreflight");
       var response = await http.post(url,
           body: jsonEncode({
             "email": userForRegister.email,
@@ -49,7 +49,7 @@ class AuthApi {
       UserForRegister userForRegister) async {
     try {
       var url = Uri.parse(
-          "https://10.0.0.2:44332/api/Auth/registerpreflightforphone");
+          "https://10.0.2.2:44332/api/Auth/registerpreflightforphone");
       var response = await http.post(url,
           body: jsonEncode({
             "email": userForRegister.email,

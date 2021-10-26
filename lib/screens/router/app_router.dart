@@ -6,6 +6,7 @@ import 'package:clip_app/screens/registration_screens/login_screen.dart';
 import 'package:clip_app/screens/registration_screens/phone_number_validation_screen.dart';
 import 'package:clip_app/screens/registration_screens/sign_screen.dart';
 import 'package:clip_app/screens/registration_screens/verification.dart';
+import 'package:clip_app/screens/tutorial/tutorial_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +17,12 @@ class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case "/":
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider.value(
+                  value: _loginBloc,
+                  child: TutorialPage(),
+                ));
+      case "/loginorsign":
         return MaterialPageRoute(
             builder: (_) => BlocProvider.value(
                   value: _loginBloc,

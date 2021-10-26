@@ -1,9 +1,11 @@
+import 'package:clip_app/bloc/auth/firebase_auth.dart';
 import 'package:clip_app/bloc/auth/form_submission_status.dart';
 import 'package:clip_app/bloc/auth/sign_up/sign_bloc.dart';
 import 'package:clip_app/bloc/auth/sign_up/sign_event.dart';
 import 'package:clip_app/bloc/auth/sign_up/sign_state.dart';
 import 'package:clip_app/screens/helpers/clip_title.dart';
 import 'package:clip_app/screens/helpers/pink_button_without_navigation.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_auth_buttons/res/buttons/google_auth_button.dart';
@@ -22,6 +24,7 @@ class SignScreen extends StatefulWidget {
 class SignScreenState extends State {
   late Color emailIconColor;
   late Color passswordIconColor;
+  late Color labelColor;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -36,8 +39,10 @@ class SignScreenState extends State {
 
   @override
   void initState() {
+    Firebase.initializeApp();
     emailIconColor = Color(0xff333030);
     passswordIconColor = Color(0xff333030);
+    labelColor = Colors.grey;
     super.initState();
   }
 
@@ -52,15 +57,21 @@ class SignScreenState extends State {
           child: TextFormField(
             onTap: () {
               setState(() {
+                labelColor = Color(0xffFF007F);
                 emailIconColor = Color(0xffFF007F);
                 passswordIconColor = Colors.grey;
               });
+            },
+            onEditingComplete: () {
+              labelColor = Colors.grey;
             },
             controller: emailConroller,
             keyboardType: TextInputType.emailAddress,
             autofocus: false,
             decoration: InputDecoration(
               hintText: 'E-posta',
+              labelText: "E-posta",
+              labelStyle: TextStyle(color: labelColor),
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -221,7 +232,11 @@ class SignScreenState extends State {
             separator: 15.0,
           ),
           GoogleAuthButton(
-            onPressed: () {},
+            onPressed: () {
+              FirebaseAuthentication fA = FirebaseAuthentication();
+              fA.signInWithGoogle().then(
+                  (value) => Navigator.of(context).pushNamed("/phoneNumber"));
+            },
             buttonColor: Colors.white,
             splashColor: Colors.grey,
             elevation: 2.0,

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:clip_app/screens/registration_screens/login_or_sign_screen.dart';
 import 'package:clip_app/screens/router/app_router.dart';
+import 'package:clip_app/screens/tutorial/tutorial_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -35,7 +36,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         onGenerateRoute: _appRouter.onGenerateRoute,
-        home: LoginOrSignScreen());
+        home: TutorialPage());
   }
 
   @override

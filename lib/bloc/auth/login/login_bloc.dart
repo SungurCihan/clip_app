@@ -35,7 +35,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         } else if (response.token == "") {
           yield state.copyWith(
               formStatus: SubmissionFailed(
-                  "Girdiğiniz bilgilere sahipp bir kullanıcıı bulunammmadı."));
+                  "Girdiğiniz bilgilere sahip bir kullanıcıı bulunammmadı."));
         }
       } catch (e) {
         yield state.copyWith(formStatus: SubmissionFailed(e));
