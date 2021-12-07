@@ -4,7 +4,9 @@ import 'package:clip_app/bloc/auth/sign_up/sign_bloc.dart';
 import 'package:clip_app/bloc/auth/sign_up/sign_event.dart';
 import 'package:clip_app/bloc/auth/sign_up/sign_state.dart';
 import 'package:clip_app/screens/helpers/clip_title.dart';
+import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:clip_app/screens/helpers/pink_button_without_navigation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +26,6 @@ class SignScreen extends StatefulWidget {
 class SignScreenState extends State {
   late Color emailIconColor;
   late Color passswordIconColor;
-  late Color labelColor;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -42,7 +43,6 @@ class SignScreenState extends State {
     Firebase.initializeApp();
     emailIconColor = Color(0xff333030);
     passswordIconColor = Color(0xff333030);
-    labelColor = Colors.grey;
     super.initState();
   }
 
@@ -57,13 +57,9 @@ class SignScreenState extends State {
           child: TextFormField(
             onTap: () {
               setState(() {
-                labelColor = Color(0xffFF007F);
-                emailIconColor = Color(0xffFF007F);
+                emailIconColor = ColorStandarts.clipPink;
                 passswordIconColor = Colors.grey;
               });
-            },
-            onEditingComplete: () {
-              labelColor = Colors.grey;
             },
             controller: emailConroller,
             keyboardType: TextInputType.emailAddress,
@@ -71,13 +67,13 @@ class SignScreenState extends State {
             decoration: InputDecoration(
               hintText: 'E-posta',
               labelText: "E-posta",
-              labelStyle: TextStyle(color: labelColor),
+              floatingLabelStyle: TextStyle(color: ColorStandarts.clipPink),
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderSide: BorderSide(color: ColorStandarts.clipPink),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -102,7 +98,7 @@ class SignScreenState extends State {
           child: TextFormField(
             onTap: () {
               setState(() {
-                passswordIconColor = Color(0xffFF007F);
+                passswordIconColor = ColorStandarts.clipPink;
                 emailIconColor = Colors.grey;
               });
             },
@@ -128,12 +124,14 @@ class SignScreenState extends State {
                       ),
               ),
               hintText: "Şifre",
+              labelText: "Şifre",
+              floatingLabelStyle: TextStyle(color: ColorStandarts.clipPink),
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderSide: BorderSide(color: ColorStandarts.clipPink),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -159,7 +157,7 @@ class SignScreenState extends State {
           child: TextFormField(
             onTap: () {
               setState(() {
-                passswordIconColor = Color(0xffFF007F);
+                passswordIconColor = ColorStandarts.clipPink;
                 emailIconColor = Colors.grey;
               });
             },
@@ -185,12 +183,14 @@ class SignScreenState extends State {
                       ),
               ),
               hintText: "Şifre Tekrar",
+              labelText: "Şifre Tekrar",
+              floatingLabelStyle: TextStyle(color: ColorStandarts.clipPink),
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderSide: BorderSide(color: ColorStandarts.clipPink),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -272,13 +272,15 @@ class SignScreenState extends State {
             keyboardType: TextInputType.emailAddress,
             autofocus: false,
             decoration: InputDecoration(
-              hintText: "İsim",
+              labelText: 'Ad',
+              floatingLabelStyle: TextStyle(color: ColorStandarts.clipPink),
+              hintText: "Ad",
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderSide: BorderSide(color: ColorStandarts.clipPink),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -307,13 +309,15 @@ class SignScreenState extends State {
             keyboardType: TextInputType.emailAddress,
             autofocus: false,
             decoration: InputDecoration(
-              hintText: "Soyisim",
+              labelText: "Soyad",
+              floatingLabelStyle: TextStyle(color: ColorStandarts.clipPink),
+              hintText: "Soyad",
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderSide: BorderSide(color: ColorStandarts.clipPink),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -334,8 +338,10 @@ class SignScreenState extends State {
         final formStatus = state.formStatus;
         if (formStatus is RegistrationFailed) {
           _showSnackBar(context, formStatus.excepiton.toString());
+          context.read<SignBloc>().add(RegistrationNotSubmitted());
         } else if (formStatus is RegistrationSuccess) {
           Navigator.of(context).pushNamed("/phoneNumber");
+          context.read<SignBloc>().add(RegistrationNotSubmitted());
         }
       },
       child: SingleChildScrollView(
@@ -382,9 +388,9 @@ class SignScreenState extends State {
                     builder: (context, state) {
                       // final isLogin = context.select(
                       //     (LoginBloc loginBloc) => loginBloc.state.formStatus);
-                      return state.formStatus is FormSubmitting
+                      return state.formStatus is RegistrationSubmitting
                           ? CircularProgressIndicator(
-                              color: Color(0xffFF007F),
+                              color: ColorStandarts.clipPink,
                             )
                           : PinkButtonWithoutNavigation("Kayıt Ol", () {
                               if (_formKey.currentState!.validate()) {

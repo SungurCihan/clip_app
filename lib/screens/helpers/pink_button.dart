@@ -1,3 +1,4 @@
+import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:flutter/material.dart';
 
 class PinkButton extends StatelessWidget {
@@ -31,7 +32,7 @@ class PinkButton extends StatelessWidget {
                   blurRadius: 8,
                   spreadRadius: 2)
             ],
-            color: Color(0xffFF007F)),
+            color: ColorStandarts.clipPink),
         child: Text(
           content,
           style: TextStyle(

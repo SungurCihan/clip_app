@@ -29,7 +29,7 @@ class NotRegistred extends FormSubmissionStatus {}
 class RegistrationSuccess extends FormSubmissionStatus {}
 
 class RegistrationFailed extends FormSubmissionStatus {
-  final Object excepiton;
+  final Object? excepiton;
 
   RegistrationFailed(this.excepiton);
 }

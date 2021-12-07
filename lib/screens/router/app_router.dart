@@ -1,6 +1,7 @@
 import 'package:clip_app/bloc/auth/auth_repository.dart';
 import 'package:clip_app/bloc/auth/login/login_bloc.dart';
 import 'package:clip_app/bloc/auth/sign_up/sign_bloc.dart';
+import 'package:clip_app/screens/main_screens/bottom_page_route.dart';
 import 'package:clip_app/screens/registration_screens/login_or_sign_screen.dart';
 import 'package:clip_app/screens/registration_screens/login_screen.dart';
 import 'package:clip_app/screens/registration_screens/phone_number_validation_screen.dart';
@@ -51,6 +52,12 @@ class AppRouter {
             builder: (_) => BlocProvider.value(
                   value: _loginBloc,
                   child: Verificatoin(),
+                ));
+      case "/mainscreen":
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider.value(
+                  value: _loginBloc,
+                  child: BottomPageRoute(),
                 ));
       default:
         return MaterialPageRoute(

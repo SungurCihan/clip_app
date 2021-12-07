@@ -42,6 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } else if (event is LoginNotSubmitted) {
       yield state.copyWith(formStatus: LoggedOut());
+      yield state.copyWith(formStatus: InitialFormStatus());
     }
   }
 }

@@ -2,6 +2,8 @@ import 'package:clip_app/screens/registration_screens/sign_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'constants/colors_standarts.dart';
+
 class BottomDivider extends StatelessWidget {
   const BottomDivider({Key? key}) : super(key: key);
 
@@ -28,8 +30,7 @@ class BottomDivider extends StatelessWidget {
                         fontSize: 18))),
             TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SignScreen()));
+                Navigator.of(context).pushNamed("/sign");
               },
               child: RichText(
                   text: TextSpan(
@@ -37,7 +38,7 @@ class BottomDivider extends StatelessWidget {
                 style: GoogleFonts.roboto(
                   textStyle: Theme.of(context).textTheme.bodyText2,
                   fontSize: 18,
-                  color: Color(0xff006FFF),
+                  color: ColorStandarts.clipPink,
                 ),
               )),
             )

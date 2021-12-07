@@ -1,6 +1,6 @@
 class UserResponseModelForPre {
   late bool success;
-  late String message;
+  late String? message;
 
   UserResponseModelForPre(this.success, this.message);
 

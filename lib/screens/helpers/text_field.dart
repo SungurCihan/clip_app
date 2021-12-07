@@ -4,6 +4,8 @@ import 'package:clip_app/bloc/auth/sign_up/sign_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'constants/colors_standarts.dart';
+
 class TextArea extends StatelessWidget {
   final String hintText;
 
@@ -33,7 +35,7 @@ class TextArea extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderSide: BorderSide(color: ColorStandarts.clipPink),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),

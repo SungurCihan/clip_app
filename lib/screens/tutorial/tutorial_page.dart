@@ -1,3 +1,5 @@
+import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
+import 'package:clip_app/screens/registration_screens/login_or_sign_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +42,7 @@ class TutorialPageState extends State {
               child: Text(
                 'Skip',
                 style: TextStyle(
-                    color: Color(0xffFF007F),
+                    color: ColorStandarts.clipPink,
                     fontSize: 18,
                     fontWeight: FontWeight.w400),
               ),
@@ -58,6 +60,9 @@ class TutorialPageState extends State {
             onPageChanged: (int page) {
               setState(() {
                 currentIndex = page;
+                if (currentIndex == 3) {
+                  Navigator.of(context).pushNamed("/loginorsign");
+                }
               });
             },
             controller: _pageController,
@@ -71,6 +76,8 @@ class TutorialPageState extends State {
                   image: 'assets/cliplogo.png',
                   title: 'Kuaförleri incele'),
               makePage(image: 'assets/cliplogo.png', title: 'Hızlı randevu al'),
+              makePage(image: 'assets/cliplogo.png', title: 'Hızlı randevu al'),
+              //LoginOrSignScreen()
             ],
           ),
           Container(
@@ -143,7 +150,8 @@ class TutorialPageState extends State {
       width: isActive ? 30 : 6,
       margin: EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
-          color: Color(0xffFF007F), borderRadius: BorderRadius.circular(5)),
+          color: ColorStandarts.clipPink,
+          borderRadius: BorderRadius.circular(5)),
     );
   }
 

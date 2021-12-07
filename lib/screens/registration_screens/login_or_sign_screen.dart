@@ -1,3 +1,4 @@
+import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:clip_app/screens/helpers/pink_button.dart';
 import 'package:clip_app/screens/helpers/clip_title.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +28,7 @@ class LoginOrSignInScreenState extends State {
         alignment: Alignment.center,
         child: Text(
           'Giriş Yap',
-          style: TextStyle(fontSize: 20, color: Color(0xffFF007F)),
+          style: TextStyle(fontSize: 20, color: ColorStandarts.clipPink),
         ),
       ),
     );
@@ -53,9 +54,7 @@ class LoginOrSignInScreenState extends State {
               SizedBox(
                 height: 80,
               ),
-              PinkButton("Kayıt Ol", "/sign", () {
-                print("cesitli seyler");
-              }),
+              PinkButton("Kayıt Ol", "/sign", () {}),
               SizedBox(
                 height: 20,
               ),

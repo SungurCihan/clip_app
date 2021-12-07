@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'constants/colors_standarts.dart';
+
 class PinkButtonWithoutNavigation extends StatelessWidget {
   final String content;
   final void Function() method;
@@ -29,7 +31,7 @@ class PinkButtonWithoutNavigation extends StatelessWidget {
                   blurRadius: 8,
                   spreadRadius: 2)
             ],
-            color: Color(0xffFF007F)),
+            color: ColorStandarts.clipPink),
         child: Text(
           content,
           style: TextStyle(

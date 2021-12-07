@@ -55,6 +55,7 @@ class SignBloc extends Bloc<SignEvent, SignState> {
       }
     } else if (event is RegistrationNotSubmitted) {
       yield state.copyWith(formStatus: NotRegistred());
+      yield state.copyWith(formStatus: InitialFormStatus());
     }
   }
 }

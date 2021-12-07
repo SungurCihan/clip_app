@@ -1,4 +1,5 @@
 import 'package:clip_app/screens/helpers/clip_title.dart';
+import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:clip_app/screens/main_screens/account_screen.dart';
 import 'package:clip_app/screens/main_screens/appointment_screen.dart';
 import 'package:clip_app/screens/main_screens/basket_screen.dart';
@@ -46,6 +47,7 @@ class BottomPageRouteState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: PageView(
         onPageChanged: (index) => setState(() {
           _selectedIndex = index;
@@ -55,38 +57,49 @@ class BottomPageRouteState extends State {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-            color: Colors.red,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10))),
-        child: FlashyTabBar(
-          selectedIndex: _selectedIndex,
-          showElevation: true,
-          onItemSelected: (index) => _onItemTapped(index),
-          items: [
-            FlashyTabBarItem(
-              icon: Icon(Iconsax.home),
-              title: Text('Ana Sayfa'),
-            ),
-            FlashyTabBarItem(
-              icon: Icon(Iconsax.search_normal),
-              title: Text('Arama'),
-            ),
-            FlashyTabBarItem(
-              icon: Icon(Iconsax.calendar_1),
-              title: Text('Clip'),
-            ),
-            FlashyTabBarItem(
-              icon: Icon(Iconsax.bag_2),
-              title: Text('Sepetim'),
-            ),
-            FlashyTabBarItem(
-              icon: Icon(Iconsax.user),
-              title: Text('Hesabım'),
-            ),
-          ],
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+          child: FlashyTabBar(
+            selectedIndex: _selectedIndex,
+            showElevation: true,
+            onItemSelected: (index) => _onItemTapped(index),
+            items: [
+              FlashyTabBarItem(
+                activeColor: ColorStandarts.clipPink,
+                icon: Icon(Iconsax.home),
+                title: Text('Ana Sayfa'),
+              ),
+              FlashyTabBarItem(
+                activeColor: ColorStandarts.clipPink,
+                icon: Icon(Iconsax.search_normal),
+                title: Text('Arama'),
+              ),
+              FlashyTabBarItem(
+                activeColor: ColorStandarts.clipPink,
+                icon: Icon(Iconsax.calendar_1),
+                title: Text('Clip'),
+              ),
+              FlashyTabBarItem(
+                activeColor: ColorStandarts.clipPink,
+                icon: Icon(Iconsax.bag_2),
+                title: Text('Sepetim'),
+              ),
+              FlashyTabBarItem(
+                activeColor: ColorStandarts.clipPink,
+                icon: Icon(Iconsax.user),
+                title: Text('Hesabım'),
+              ),
+            ],
+          ),
         ),
       ),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         bottomOpacity: 0,
         elevation: 0,
         backgroundColor: Colors.transparent,

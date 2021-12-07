@@ -1,3 +1,4 @@
+import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'dart:async';
@@ -160,9 +161,11 @@ class _VerificatoinState extends State<Verificatoin> {
                     ? null
                     : () {
                         verify();
+                        //Future.delayed(Duration(seconds: 3));
+                        //Navigator.of(context).pushNamed("/mainscreen");
                       },
                 minWidth: double.infinity,
-                color: Color(0xffFF007F),
+                color: ColorStandarts.clipPink,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 child: _isLoading
@@ -172,7 +175,7 @@ class _VerificatoinState extends State<Verificatoin> {
                         child: CircularProgressIndicator(
                           backgroundColor: Colors.white,
                           strokeWidth: 3,
-                          color: Color(0xffFF007F),
+                          color: ColorStandarts.clipPink,
                         ),
                       )
                     : _isVerified

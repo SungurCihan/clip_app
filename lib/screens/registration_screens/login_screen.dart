@@ -1,11 +1,14 @@
 import 'package:clip_app/bloc/auth/auth_repository.dart';
+import 'package:clip_app/bloc/auth/firebase_auth.dart';
 import 'package:clip_app/bloc/auth/form_submission_status.dart';
 import 'package:clip_app/bloc/auth/login/login_bloc.dart';
 import 'package:clip_app/bloc/auth/login/login_event.dart';
 import 'package:clip_app/bloc/auth/login/login_state.dart';
 import 'package:clip_app/screens/helpers/bottom_divider.dart';
 import 'package:clip_app/screens/helpers/clip_title.dart';
+import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:clip_app/screens/helpers/pink_button_without_navigation.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -28,10 +31,13 @@ class LoginScreenState extends State {
   late Color emailIconColor;
   late Color passswordIconColor;
 
+  bool _isVisible = false;
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
+    Firebase.initializeApp();
     emailIconColor = Color(0xff333030);
     passswordIconColor = Color(0xff333030);
     super.initState();
@@ -59,13 +65,15 @@ class LoginScreenState extends State {
                 Iconsax.user,
                 color: emailIconColor,
               ),
+              labelText: "Email",
+              floatingLabelStyle: TextStyle(color: ColorStandarts.clipPink),
               hintText: 'Email',
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderSide: BorderSide(color: ColorStandarts.clipPink),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -91,11 +99,11 @@ class LoginScreenState extends State {
           child: TextFormField(
             onTap: () {
               setState(() {
-                passswordIconColor = Color(0xffFF007F);
+                passswordIconColor = ColorStandarts.clipPink;
                 emailIconColor = Colors.grey;
               });
             },
-            obscureText: true,
+            obscureText: !_isVisible,
             keyboardType: TextInputType.emailAddress,
             autofocus: false,
             decoration: InputDecoration(
@@ -103,13 +111,31 @@ class LoginScreenState extends State {
                 Iconsax.lock,
                 color: passswordIconColor,
               ),
-              hintText: 'Password',
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _isVisible = !_isVisible;
+                  });
+                },
+                icon: _isVisible
+                    ? Icon(
+                        Icons.visibility,
+                        color: Colors.black,
+                      )
+                    : Icon(
+                        Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+              ),
+              labelText: "Şifre",
+              floatingLabelStyle: TextStyle(color: ColorStandarts.clipPink),
+              hintText: 'Şifre',
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffFF007F)),
+                borderSide: BorderSide(color: ColorStandarts.clipPink),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -170,7 +196,11 @@ class LoginScreenState extends State {
             separator: 15.0,
           ),
           GoogleAuthButton(
-            onPressed: () {},
+            onPressed: () {
+              FirebaseAuthentication fA = FirebaseAuthentication();
+              fA.signInWithGoogle().then(
+                  (value) => Navigator.of(context).pushNamed("/mainscreen"));
+            },
             buttonColor: Colors.white,
             splashColor: Colors.grey,
             elevation: 2.0,
@@ -203,8 +233,10 @@ class LoginScreenState extends State {
         final formStatus = state.formStatus;
         if (formStatus is SubmissionFailed) {
           _showSnackBar(context, formStatus.exception.toString());
+          context.read<LoginBloc>().add(LoginNotSubmitted());
         } else if (formStatus is SubmissionSuccess) {
-          Navigator.of(context).pushNamed("/phoneNumber");
+          Navigator.of(context).pushNamed("/mainscreen");
+          context.read<LoginBloc>().add(LoginNotSubmitted());
         }
       },
       child: SingleChildScrollView(
