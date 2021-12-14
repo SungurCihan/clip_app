@@ -1,9 +1,5 @@
 import 'dart:io';
-
 import 'package:clip_app/screens/main_screens/bottom_page_route.dart';
-import 'package:clip_app/screens/registration_screens/login_or_sign_screen.dart';
-import 'package:clip_app/screens/registration_screens/phone_number_validation_screen.dart';
-import 'package:clip_app/screens/registration_screens/verification.dart';
 import 'package:clip_app/screens/router/app_router.dart';
 import 'package:clip_app/screens/tutorial/tutorial_page.dart';
 import 'package:flutter/material.dart';
