@@ -36,11 +36,8 @@ class AuthApi {
           });
 
       final data = jsonDecode(response.body);
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
       return UserResponseModelForPre(data["success"], data["message"]);
     } catch (e) {
-      print(e);
       return UserResponseModelForPre(false, e.toString());
     }
   }
@@ -81,11 +78,7 @@ class AuthApi {
           "Accept": "application/json",
           "content-type": "application/json"
         });
-    print("Response status: ${response.statusCode}");
-    print("Response body: ${response.body}");
     final data = jsonDecode(response.body);
-    print(data["token"]);
-    print(data["expiration"]);
     return UserResponseModel(data["token"], data["expiration"]);
   }
 }

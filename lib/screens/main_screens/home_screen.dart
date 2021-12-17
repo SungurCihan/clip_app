@@ -2,7 +2,6 @@ import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:iconly/iconly.dart';
-import 'package:iconsax/iconsax.dart';
 import 'dart:ui' as ui;
 
 class HomeScreen extends StatefulWidget {
@@ -18,45 +17,52 @@ class HomeScreenState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(right: 10),
-              height: 70,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 70,
-                  itemBuilder: (context, index) {
-                    return _storyCart();
-                  }),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(27),
-                    topRight: Radius.circular(27)),
-              ),
-              margin: EdgeInsets.only(top: 10),
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: ListView.builder(
-
-                  //scrollDirection: Axis.vertical,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Align(
-                      child: _postCart(
-                          (MediaQuery.of(context).size.height * 70) / 100),
-                      alignment: Alignment.topCenter,
-                      heightFactor: 0.9,
-                    );
-                  }),
-            ),
-          ],
-        ),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          _story(),
+        ],
+        body: _posts(context),
       ),
+    );
+  }
+
+  Container _posts(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(27), topRight: Radius.circular(27)),
+      ),
+      margin: EdgeInsets.only(top: 10),
+      height: MediaQuery.of(context).size.height,
+      width: double.infinity,
+      child: ListView.builder(
+          //scrollDirection: Axis.vertical,
+          itemCount: 5,
+          itemBuilder: (context, index) {
+            return Align(
+              child: _postCart((MediaQuery.of(context).size.height * 70) / 100),
+              alignment: Alignment.topCenter,
+              heightFactor: 0.9,
+            );
+          }),
+    );
+  }
+
+  SliverAppBar _story() {
+    return SliverAppBar(
+      backgroundColor: Colors.white,
+      actions: [
+        Flexible(
+          // padding: EdgeInsets.only(right: 10),
+          // height: 70,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 70,
+              itemBuilder: (context, index) {
+                return _storyCart();
+              }),
+        ),
+      ],
     );
   }
 
