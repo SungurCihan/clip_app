@@ -102,7 +102,7 @@ class BottomPageRouteState extends State {
         automaticallyImplyLeading: false,
         bottomOpacity: 0,
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0xffFFFFFF),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
