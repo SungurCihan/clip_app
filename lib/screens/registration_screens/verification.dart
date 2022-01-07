@@ -31,8 +31,8 @@ class _VerificatoinState extends State<Verificatoin> {
       _isResendAgain = true;
     });
 
-    const oneSec = const Duration(seconds: 1);
-    _timer = new Timer.periodic(
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
         setState(() {
@@ -53,8 +53,8 @@ class _VerificatoinState extends State<Verificatoin> {
       _isLoading = true;
     });
 
-    const oneSec = const Duration(milliseconds: 1000);
-    _timer = new Timer.periodic(
+    const oneSec = Duration(milliseconds: 1000);
+    _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
         setState(() {
@@ -169,7 +169,7 @@ class _VerificatoinState extends State<Verificatoin> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 child: _isLoading
-                    ? Container(
+                    ? SizedBox(
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(

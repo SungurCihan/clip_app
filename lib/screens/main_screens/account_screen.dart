@@ -15,7 +15,7 @@ class AccountScreenState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFFFFFF),
+      backgroundColor: ColorStandarts.vanillaWhite,
       body: ListView(
         children: [_topSide(), _midSide(context), _bottomSide(context)],
       ),

@@ -1,3 +1,4 @@
+import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
@@ -14,7 +15,7 @@ class SearchScreenState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xffE1E3F2),
+        backgroundColor: ColorStandarts.lightBlueBackground,
         body: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, innerBoxIsScrolled) => [

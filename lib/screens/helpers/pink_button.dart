@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class PinkButton extends StatelessWidget {
   final String content;
-  final String routeName;
   final void Function() method;
+  final String routeName;
 
   const PinkButton(this.content, this.routeName, this.method, {Key? key})
       : super(key: key);

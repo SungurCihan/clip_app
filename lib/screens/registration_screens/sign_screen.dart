@@ -6,7 +6,6 @@ import 'package:clip_app/bloc/auth/sign_up/sign_state.dart';
 import 'package:clip_app/screens/helpers/clip_title.dart';
 import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:clip_app/screens/helpers/pink_button_without_navigation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -397,7 +396,6 @@ class SignScreenState extends State {
                                 context
                                     .read<SignBloc>()
                                     .add(RegistrationSubmitted());
-                                print(state.formStatus.toString());
                               }
                               // if (isLogin is SubmissionSuccess) {
                               //   Navigator.of(context).pushNamed("/phoneNumber");
@@ -428,5 +426,4 @@ void _showSnackBar(BuildContext context, String message) {
     backgroundColor: Colors.red,
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  print(message);
 }

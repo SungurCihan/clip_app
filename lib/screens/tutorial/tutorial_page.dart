@@ -1,5 +1,4 @@
 import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
-import 'package:clip_app/screens/registration_screens/login_or_sign_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

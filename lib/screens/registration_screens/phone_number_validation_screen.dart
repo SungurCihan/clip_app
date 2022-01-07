@@ -1,14 +1,11 @@
 import 'package:clip_app/bloc/auth/login/login_bloc.dart';
-import 'package:clip_app/bloc/auth/login/login_event.dart';
 import 'package:clip_app/bloc/auth/login/login_state.dart';
 import 'package:clip_app/screens/helpers/clip_title.dart';
 import 'package:clip_app/screens/helpers/constants/colors_standarts.dart';
 import 'package:clip_app/screens/helpers/pink_button.dart';
-import 'package:clip_app/screens/registration_screens/verification.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconsax/iconsax.dart';
 
 class PhoneNumberValidation extends StatefulWidget {
   const PhoneNumberValidation({Key? key}) : super(key: key);
@@ -50,7 +47,7 @@ class PhoneNumberValidationState extends State {
             onChanged: print,
             // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
             initialSelection: 'TR',
-            favorite: ['+90', 'TR'],
+            favorite: const ['+90', 'TR'],
             // optional. Shows only country name and flag
             showCountryOnly: false,
             // optional. Shows only country name and flag when popup is closed.
@@ -75,9 +72,7 @@ class PhoneNumberValidationState extends State {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(

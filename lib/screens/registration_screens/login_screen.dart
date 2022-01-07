@@ -1,4 +1,3 @@
-import 'package:clip_app/bloc/auth/auth_repository.dart';
 import 'package:clip_app/bloc/auth/firebase_auth.dart';
 import 'package:clip_app/bloc/auth/form_submission_status.dart';
 import 'package:clip_app/bloc/auth/login/login_bloc.dart';
@@ -280,7 +279,6 @@ class LoginScreenState extends State {
                         : PinkButtonWithoutNavigation("Giriş Yap", () {
                             if (_formKey.currentState!.validate()) {
                               context.read<LoginBloc>().add(LoginSubmitted());
-                              print(state.formStatus.toString());
                             }
                             // if (isLogin is SubmissionSuccess) {
                             //   Navigator.of(context).pushNamed("/phoneNumber");
@@ -307,7 +305,6 @@ class LoginScreenState extends State {
       backgroundColor: Colors.red,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    print(message);
   }
 
   void toast(String message) {
